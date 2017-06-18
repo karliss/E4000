@@ -4,8 +4,9 @@
 #include <avr/eeprom.h>
 #include <util/delay.h>
 
+extern "C" {
 #include "usbdrv.h"
-
+}
 
 // TODO:rewrite
 const PROGMEM char usbHidReportDescriptor[USB_CFG_HID_REPORT_DESCRIPTOR_LENGTH] = 
@@ -55,13 +56,15 @@ static keyboard_report_t keyboard_report;
 volatile static uchar LED_state = 0xff;
 static uchar idleRate; 
 
-usbMsgLen_t usbFunctionSetup(uchar data[8]) {
-    usbRequest_t *rq = (void *)data;
+usbMsgLen_t usbFunctionSetup(uchar data[8])
+{
+    usbRequest_t *rq = reinterpret_cast<usbRequest_t*>(data);
 
-    if((rq->bmRequestType & USBRQ_TYPE_MASK) == USBRQ_TYPE_CLASS) {
+    if((rq->bmRequestType & USBRQ_TYPE_MASK) == USBRQ_TYPE_CLASS)
+    {
         switch(rq->bRequest) {
         case USBRQ_HID_GET_REPORT:
-            usbMsgPtr = (void *)&keyboard_report;
+            usbMsgPtr = reinterpret_cast<uchar*>(&keyboard_report);
             keyboard_report.modifier = 0;
             keyboard_report.keycode[0] = 0;
             return sizeof(keyboard_report);
@@ -86,7 +89,7 @@ usbMsgLen_t usbFunctionSetup(uchar data[8]) {
 static const uint8_t LED_MASK = 0xf0;
 
 
-usbMsgLen_t usbFunctionWrite(uint8_t * data, uchar len) {
+extern "C" usbMsgLen_t usbFunctionWrite(uint8_t * data, uchar len) {
     if (data[0] == LED_state)
         return 1;
     
@@ -96,7 +99,8 @@ usbMsgLen_t usbFunctionWrite(uint8_t * data, uchar len) {
     return 1;
 }
 
-static void buildReport(uchar send_key) {
+static void buildReport(uchar send_key)
+{
     keyboard_report.modifier = 0;
     
     if(send_key >= 'a' && send_key <= 'z')
@@ -114,15 +118,62 @@ static inline uint8_t getRows() {
     return ~result;
 }
 
-int main() {
-    uchar i, button_release_counter = 0, state = STATE_WAIT;
+const uint8_t SRCLK = (1 << PB1);
+const uint8_t SRCLR = (1 << PB2);
+const uint8_t SRD = (1 << PB0);
+const uint8_t SHIFTR_MASK = SRCLK | SRCLR | SRD;
 
-    DDRC = 0;
-    PORTC |= 0x3f;
+static void initHardware()
+{
+    DDRC = 0; // rows in
+    PORTC |= 0x3f; // rows pullups
     
+    // ROW7 ROW8, LED1 LED2 LED3 LED4
     DDRD = (0 << PD0) | (0 << PD1) | (1 << PD4) | (1 << PD5) | (1 << PD6) | (1 << PD7);
     PORTD = 0x3;
     
+    DDRB = SHIFTR_MASK;
+    PORTB = SRCLK;
+}
+
+
+const int MATRIX_COLUMNS = 24;
+
+static uint8_t MATRIX[MATRIX_COLUMNS];
+
+static void readMatrix()
+{
+    //PORT
+    PORTB |= SRCLR;
+    PORTB |= SRD;
+//    for (int i = 0; i < MATRIX_COLUMNS; i++)
+    for (int i=MATRIX_COLUMNS; i != 0; i--)
+    {
+        PORTB &= ~SRCLK;
+        PORTB |= SRCLK;
+    }
+    PORTB &= ~SRCLK;
+    PORTB &= ~SRD;
+    PORTB |= SRCLK;
+    for (int i = 0; i < MATRIX_COLUMNS; i++)
+    {
+        MATRIX[i] = getRows();
+        PORTB &= ~SRCLK;
+        PORTB |= SRD;
+        PORTB |= SRCLK;
+    }
+    PORTB &= ~SRCLR;
+    PORTB |= SRCLR;
+}
+char txt[16];
+uint8_t dlen=0;
+
+int main()
+{
+    uchar i, button_release_counter = 0, state = STATE_WAIT;
+
+    initHardware();
+ 
     for(i=0; i<sizeof(keyboard_report); i++)
         ((uchar *)&keyboard_report)[i] = 0;
 
@@ -136,24 +187,47 @@ int main() {
     //usbDeviceConnect();
     
     sei();
-
+    uint8_t last_d = 0;
+    uint8_t dt = 0;
+    button_release_counter =0;
     while(1) {
         wdt_reset();
         usbPoll();
         
         uint8_t rows = getRows();
         char key = 'x';
-        if(rows) { 
-            if(state == STATE_WAIT && button_release_counter == 255)
-                state = STATE_SEND_KEY;
+        if(rows && dt == 0) { 
+            //if(state == STATE_WAIT && button_release_counter == 255)
+            //    state = STATE_SEND_KEY;
                 
-            button_release_counter = 0;
-            key = (rows % 16) + 'a';
+            uint8_t keyid = MATRIX[0];
+            readMatrix();
+            uint8_t cnt = 0;
+            for (int i = 0; i<MATRIX_COLUMNS; i++)
+            {
+                for (int j=0; j<8; j++) {
+                    if (MATRIX[i] & (1 << j)) {
+                        txt[1] = 'a'+i;
+                        txt[2] = 'a'+j;
+                        dt=3;
+                    }
+                }
+            }
+            key = (cnt % 16) + 'a';
         }
-        
-        if(button_release_counter < 255) //TODO: do properly
-            button_release_counter++;
-
+        button_release_counter++;
+        //if(button_release_counter < 255) //TODO: do properly
+        //    button_re lease_counter++;
+       if (usbInterruptIsReady() && dt > 0) {
+           dt--;
+           if (txt[dt]) {
+                buildReport(txt[dt]);
+           } else {
+               buildReport('\0');
+           }
+           usbSetInterrupt(reinterpret_cast<uchar*>(&keyboard_report), sizeof(keyboard_report));
+       }
+        /*
         if(usbInterruptIsReady() && state != STATE_WAIT && LED_state != 0xff){
             switch(state) {
             case STATE_SEND_KEY:
@@ -169,8 +243,10 @@ int main() {
             }
             
             // start sending
-            usbSetInterrupt((void *)&keyboard_report, sizeof(keyboard_report));
-        }
+            usbSetInterrupt(reinterpret_cast<uchar*>(&keyboard_report), sizeof(keyboard_report));
+            
+
+        }            */
     }
     
     return 0;

@@ -8,10 +8,10 @@ DEVICE  = atmega88pa
 F_CPU = 12000000
 
 USBDRV_D = external/v-usb/usbdrv
-CFLAGS  = -Os -I${USBDRV_D} -Isrc -DDEBUG_LEVEL=0 -DF_CPU=$(F_CPU) -mmcu=$(DEVICE) -g
+CFLAGS  = -Os -I${USBDRV_D} -Isrc -DDEBUG_LEVEL=0 -DF_CPU=$(F_CPU) -mmcu=$(DEVICE) -g -funsigned-char
 
-SRC = src/main.c
-OBJ = ${USBDRV_D}/usbdrv.o ${USBDRV_D}/usbdrvasm.o ${USBDRV_D}/oddebug.o ${SRC:.c=.o}
+SRC = src/main.cpp
+OBJ = ${USBDRV_D}/usbdrv.o ${USBDRV_D}/usbdrvasm.o ${USBDRV_D}/oddebug.o ${SRC:.c=.o,.cpp=.o}
 
 all: $(PRG).elf lst text
 

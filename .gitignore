@@ -3,3 +3,4 @@
 /e4000.hex
 /e4000.lst
 /e4000.srec
+/src/*.o
