@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /home/karlis/proj/el/microsoft_natural_ergo_4000/board/E4000/hardware/ne_4000/natural_ergo_4000.sch)
-    (date "svētdiena, 2017. gada 30. jūlijs, plkst. 19 un 14")
+    (date "sestdiena, 2017. gada 12. augusts, plkst. 18 un 05")
     (tool "Eeschema 4.0.6")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
