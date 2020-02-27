@@ -3,10 +3,13 @@
 #include <avr/wdt.h>
 #include <avr/eeprom.h>
 #include <util/delay.h>
+#include <string.h>
 
 extern "C" {
 #include "usbdrv.h"
 }
+
+#include "matrix_mapping.h"
 
 // TODO:rewrite
 const PROGMEM char usbHidReportDescriptor[USB_CFG_HID_REPORT_DESCRIPTOR_LENGTH] = 
@@ -85,8 +88,14 @@ usbMsgLen_t usbFunctionSetup(uchar data[8])
 #define NUM_LOCK 1
 #define CAPS_LOCK 2
 #define SCROLL_LOCK 4
+#define F_LOCK 8
 
 static const uint8_t LED_MASK = 0xf0;
+
+static void setLeds(uint8_t v)
+{
+    PORTD = (PORTD & (~LED_MASK))|((v << 4) & LED_MASK);
+}
 
 
 extern "C" usbMsgLen_t usbFunctionWrite(uint8_t * data, uchar len) {
@@ -94,19 +103,33 @@ extern "C" usbMsgLen_t usbFunctionWrite(uint8_t * data, uchar len) {
         return 1;
     
     LED_state = data[0];
-    PORTD = (PORTD & (~LED_MASK))|((LED_state << 4) & LED_MASK);
+    
+    setLeds(LED_state);
+    //PORTD = (PORTD & (~LED_MASK))|((LED_state << 4) & LED_MASK);
 
     return 1;
+}
+
+static uint8_t charToCode(char c)
+{
+    if (c >= 'a' && c <= 'z')
+        return 4 + c - 'a';
+    if (c >= '1' && c <= '9')
+        return 0x1e + c - '1';
+    if (c == '0')
+        return 0x27;
+    if (c == '\n')
+        return 0x28;
+    if (c == ' ')
+        return 0x2c;
+        
+    return 0;
 }
 
 static void buildReport(uchar send_key)
 {
     keyboard_report.modifier = 0;
-    
-    if(send_key >= 'a' && send_key <= 'z')
-        keyboard_report.keycode[0] = 4+(send_key-'a');
-    else
-        keyboard_report.keycode[0] = 0;
+    keyboard_report.keycode[0] = charToCode(send_key);
 }
 
 #define STATE_WAIT 0
@@ -118,9 +141,10 @@ static inline uint8_t getRows() {
     return ~result;
 }
 
-const uint8_t SRCLK = (1 << PB1);
+const uint8_t SRCLK = (1 << PB0);
+const uint8_t SRD = (1 << PB1);
 const uint8_t SRCLR = (1 << PB2);
-const uint8_t SRD = (1 << PB0);
+
 const uint8_t SHIFTR_MASK = SRCLK | SRCLR | SRD;
 
 static void initHardware()
@@ -137,42 +161,132 @@ static void initHardware()
 }
 
 
-const int MATRIX_COLUMNS = 24;
+const uint8_t MATRIX_ROWS = 24;
 
-static uint8_t MATRIX[MATRIX_COLUMNS];
+static uint8_t MATRIX[MATRIX_ROWS];
 
 static void readMatrix()
 {
-    //PORT
-    PORTB |= SRCLR;
+    PORTB &= ~SRCLR; // clear all rows
     PORTB |= SRD;
-//    for (int i = 0; i < MATRIX_COLUMNS; i++)
-    for (int i=MATRIX_COLUMNS; i != 0; i--)
-    {
-        PORTB &= ~SRCLK;
-        PORTB |= SRCLK;
-    }
+    PORTB |= SRCLR;
+    
     PORTB &= ~SRCLK;
-    PORTB &= ~SRD;
     PORTB |= SRCLK;
-    for (int i = 0; i < MATRIX_COLUMNS; i++)
+    PORTB &= ~SRD;
+    PORTB &= ~SRCLK;
+    PORTB |= SRCLK;
+    for (int i = 0; i < MATRIX_ROWS; i++)
     {
+        _delay_us(20);
+        cli();
+        uint8_t tmp = DDRC;
+        DDRC = tmp | 0x3f;
+        DDRC = tmp;
+        DDRD |= 0x01;
+        DDRD &= ~0x01;
+        DDRD |= 0x02;
+        DDRD &= ~0x02;
+        sei();
+        /*DDRD |= 0x3;
+        DDRD &= ~0x3f;*/
         MATRIX[i] = getRows();
         PORTB &= ~SRCLK;
-        PORTB |= SRD;
+        PORTB &= ~SRD;
         PORTB |= SRCLK;
     }
     PORTB &= ~SRCLR;
     PORTB |= SRCLR;
 }
-char txt[16];
-uint8_t dlen=0;
 
+static uint8_t cMatrix[32];
+
+static void readCompressedMatrix()
+{
+    memset(cMatrix, 0, sizeof(cMatrix));
+    readMatrix();
+    uint8_t keys = 0;
+    memset(&keyboard_report, 0, sizeof(keyboard_report));
+    uint8_t cnt=0;
+    for (uint8_t i=0; i<MATRIX_ROWS; i++)
+    {
+        uint8_t t = MATRIX[i];
+        if (!t) continue;
+        for (uint8_t j=0; j<8; j++)
+        {
+            if (t & 0x01)
+            {
+                uint8_t v = pgm_read_byte(&(MATRIX_MAPPING[i][j]));
+                cnt++;
+                if (keys < 6 && v)
+                {
+                    //keyboard_report.keycode[keys++] = charToCode('0' + j);
+                    //keyboard_report.keycode[keys++] = charToCode('a' + i);
+                    keyboard_report.keycode[keys++] = v;
+                }
+                /*uint8_t k = v & 0x07;
+                v >>= 3;
+                cMatrix[v] |= (1 << k);*/
+            }
+            t >>= 1;
+        }
+    }
+   /* if (cnt) {
+        keyboard_report.keycode[keys++] = charToCode('1' + cnt - 1);
+    }*/
+}
+/*
+static void readCompressedMatrix()
+{
+    memset(cMatrix, 0, sizeof(cMatrix));
+    readMatrix();
+    for (uint8_t i=0; i<MATRIX_ROWS; i++)
+    {
+        uint8_t t = MATRIX[i];
+        if (!t) continue;
+        for (int j=0; j<8; j++)
+        {
+            if (t & 0x01)
+            {
+                uint8_t v = MATRIX_MAPPING[i][j];
+                uint8_t k = v & 0x07;
+                v >>= 3;
+                cMatrix[v] |= (1 << k);
+            }
+            t >>= 1;
+        }
+    }
+}
+
+static void fillReportFromcMatrix()
+{
+    uint8_t keys = 0;
+    memset(&keyboard_report, 0, sizeof(keyboard_report));
+    for (int i = 0; i < 32; i++)
+    {
+        uint8_t t = cMatrix[i];
+        if (!t) continue;
+        for (int j = 0; j < 8; j++)
+        {
+            if ((t & 0x01) && keys < 6)
+            {
+                uint8_t id = (i << 3) | (j);
+                keyboard_report.keycode[keys++] = id;
+            }
+            t >>= 1;
+        }
+    }
+}*/
+
+char txt[32];
+uint8_t dlen=0;
+uint8_t cr = 0;
 int main()
 {
     uchar i, button_release_counter = 0, state = STATE_WAIT;
-
+    wdt_disable();
     initHardware();
+    setLeds(0);
  
     for(i=0; i<sizeof(keyboard_report); i++)
         ((uchar *)&keyboard_report)[i] = 0;
@@ -181,52 +295,88 @@ int main()
     
     //usbDeviceDisconnect();
     for(i = 0; i<250; i++) {
-        wdt_reset();
+        //wdt_reset();
         _delay_ms(2);
     }
     //usbDeviceConnect();
+    setLeds(1);
     
     sei();
     uint8_t last_d = 0;
     uint8_t dt = 0;
     button_release_counter =0;
+    txt[0] ='\0';
+    //txt[1] ='b';
+    //txt[2] ='\0';
     while(1) {
-        wdt_reset();
+        //wdt_reset();
+        //LED_state++;
+        
         usbPoll();
         
-        uint8_t rows = getRows();
+        //uint8_t rows = getRows();
         char key = 'x';
-        if(rows && dt == 0) { 
+       /* if(1 && dt == 0) { 
             //if(state == STATE_WAIT && button_release_counter == 255)
             //    state = STATE_SEND_KEY;
                 
             uint8_t keyid = MATRIX[0];
-            readMatrix();
-            uint8_t cnt = 0;
-            for (int i = 0; i<MATRIX_COLUMNS; i++)
-            {
-                for (int j=0; j<8; j++) {
-                    if (MATRIX[i] & (1 << j)) {
-                        txt[1] = 'a'+i;
-                        txt[2] = 'a'+j;
-                        dt=3;
-                    }
-                }
+
+            if (cr >= MATRIX_ROWS) {
+                cr = 0;
             }
-            key = (cnt % 16) + 'a';
-        }
+            uint8_t p = 0;
+            txt[p++] = 0;
+            if (cr == 0) {
+                readMatrix();
+            }
+            txt[p++] = '\n';
+            uint8_t cnt = 0;
+
+            for (int j=0; j<8; j++) {
+                char c = 'o';
+                if (MATRIX[cr] & (1 << j)) {
+                    c = 'x';
+                }
+                txt[p++] = ' ';
+                txt[p++] = c;
+            }
+            if (cr == 0) {
+                txt[p++] = '\n';
+                txt[p++] = '\n';
+            }
+            dt = p;
+            cr++;
+        }*/
+        key = 'z';
         button_release_counter++;
         //if(button_release_counter < 255) //TODO: do properly
         //    button_re lease_counter++;
-       if (usbInterruptIsReady() && dt > 0) {
+       if (usbInterruptIsReady() /*&& dt > 0*/) {
+           readCompressedMatrix();
+           //fillReportFromcMatrix();
+           usbSetInterrupt(reinterpret_cast<uchar*>(&keyboard_report), sizeof(keyboard_report));
+           /*
            dt--;
            if (txt[dt]) {
                 buildReport(txt[dt]);
            } else {
                buildReport('\0');
            }
-           usbSetInterrupt(reinterpret_cast<uchar*>(&keyboard_report), sizeof(keyboard_report));
+           usbSetInterrupt(reinterpret_cast<uchar*>(&keyboard_report), sizeof(keyboard_report));*/
        }
+       //setLeds(2);
+       /*if (usbInterruptIsReady()) {
+           uint8_t rows = getRows();
+           if (rows)
+               buildReport('z');
+           else
+               buildReport(0);
+
+           usbSetInterrupt(reinterpret_cast<uchar*>(&keyboard_report), sizeof(keyboard_report));
+           //setLeds(8);
+       }*/
+       //setLeds(4);
         /*
         if(usbInterruptIsReady() && state != STATE_WAIT && LED_state != 0xff){
             switch(state) {

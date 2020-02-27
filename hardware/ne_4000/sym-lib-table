@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name natural_ergo_4000-rescue)(type Legacy)(uri ${KIPRJMOD}/natural_ergo_4000-rescue.lib)(options "")(descr ""))
+  (lib (name parts)(type Legacy)(uri ${KIPRJMOD}/parts.lib)(options "")(descr ""))
+)
