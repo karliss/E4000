@@ -1,38 +1,5 @@
-EESchema Schematic File Version 2
-LIBS:power
-LIBS:device
-LIBS:transistors
-LIBS:conn
-LIBS:linear
-LIBS:regul
-LIBS:74xx
-LIBS:cmos4000
-LIBS:adc-dac
-LIBS:memory
-LIBS:xilinx
-LIBS:microcontrollers
-LIBS:dsp
-LIBS:microchip
-LIBS:analog_switches
-LIBS:motorola
-LIBS:texas
-LIBS:intel
-LIBS:audio
-LIBS:interface
-LIBS:digital-audio
-LIBS:philips
-LIBS:display
-LIBS:cypress
-LIBS:siliconi
-LIBS:opto
-LIBS:atmel
-LIBS:contrib
-LIBS:valves
-LIBS:mechanical
-LIBS:switches
-LIBS:parts
-LIBS:natural_ergo_4000-cache
-EELAYER 25 0
+EESchema Schematic File Version 4
+EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
@@ -47,7 +14,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L ATMEGA88PA-AU U1
+L natural_ergo_4000-rescue:ATMEGA88PA-AU U1
 U 1 1 590DBE4F
 P 2900 2100
 F 0 "U1" H 2150 3350 50  0000 L BNN
@@ -58,7 +25,7 @@ F 3 "" H 2900 2100 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R1
+L natural_ergo_4000-rescue:R R1
 U 1 1 590E1300
 P 4800 2300
 F 0 "R1" V 4880 2300 50  0000 C CNN
@@ -69,7 +36,7 @@ F 3 "" H 4800 2300 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L VCC #PWR01
+L natural_ergo_4000-rescue:VCC #PWR01
 U 1 1 590E138E
 P 1950 950
 F 0 "#PWR01" H 1950 800 50  0001 C CNN
@@ -80,7 +47,7 @@ F 3 "" H 1950 950 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR02
+L natural_ergo_4000-rescue:GND #PWR02
 U 1 1 590E13D9
 P 1950 3350
 F 0 "#PWR02" H 1950 3100 50  0001 C CNN
@@ -91,7 +58,7 @@ F 3 "" H 1950 3350 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L VCC #PWR03
+L natural_ergo_4000-rescue:VCC #PWR03
 U 1 1 590E142C
 P 4800 2100
 F 0 "#PWR03" H 4800 1950 50  0001 C CNN
@@ -102,7 +69,7 @@ F 3 "" H 4800 2100 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Crystal Y1
+L natural_ergo_4000-rescue:Crystal Y1
 U 1 1 590E14F1
 P 4900 1650
 F 0 "Y1" H 4900 1800 50  0000 C CNN
@@ -113,7 +80,7 @@ F 3 "" H 4900 1650 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L C C1
+L natural_ergo_4000-rescue:C C1
 U 1 1 590E15FF
 P 5100 1500
 F 0 "C1" V 4950 1500 50  0000 L CNN
@@ -124,7 +91,7 @@ F 3 "" H 5100 1500 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L C C2
+L natural_ergo_4000-rescue:C C2
 U 1 1 590E169F
 P 5100 1800
 F 0 "C2" V 5150 1850 50  0000 L CNN
@@ -135,7 +102,7 @@ F 3 "" H 5100 1800 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L GND #PWR04
+L natural_ergo_4000-rescue:GND #PWR04
 U 1 1 590E1782
 P 5500 1650
 F 0 "#PWR04" H 5500 1400 50  0001 C CNN
@@ -146,7 +113,7 @@ F 3 "" H 5500 1650 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L CONN_02X03 J2
+L natural_ergo_4000-rescue:CONN_02X03 J2
 U 1 1 590E1862
 P 3050 4700
 F 0 "J2" H 3050 4900 50  0000 C CNN
@@ -157,7 +124,7 @@ F 3 "" H 3050 3500 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L VCC #PWR05
+L natural_ergo_4000-rescue:VCC #PWR05
 U 1 1 590E19A3
 P 3300 4450
 F 0 "#PWR05" H 3300 4300 50  0001 C CNN
@@ -184,7 +151,7 @@ MISO
 Text Label 2600 4800 0    60   ~ 0
 RESET
 $Comp
-L GND #PWR06
+L natural_ergo_4000-rescue:GND #PWR06
 U 1 1 590E2B39
 P 3350 4800
 F 0 "#PWR06" H 3350 4550 50  0001 C CNN
@@ -195,7 +162,7 @@ F 3 "" H 3350 4800 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L LED D1
+L natural_ergo_4000-rescue:LED D1
 U 1 1 590F651D
 P 5600 3700
 F 0 "D1" H 5600 3800 50  0000 C CNN
@@ -206,7 +173,7 @@ F 3 "" H 5600 3700 50  0001 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L R R2
+L natural_ergo_4000-rescue:R R2
 U 1 1 590F687B
 P 5850 4000
 F 0 "R2" V 5930 4000 50  0000 C CNN
@@ -217,7 +184,7 @@ F 3 "" H 5850 4000 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L R R3
+L natural_ergo_4000-rescue:R R3
 U 1 1 590F6A20
 P 5650 3900
 F 0 "R3" V 5730 3900 50  0000 C CNN
@@ -228,7 +195,7 @@ F 3 "" H 5650 3900 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L R R4
+L natural_ergo_4000-rescue:R R4
 U 1 1 590F6A63
 P 5250 3700
 F 0 "R4" V 5330 3700 50  0000 C CNN
@@ -239,7 +206,7 @@ F 3 "" H 5250 3700 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L R R5
+L natural_ergo_4000-rescue:R R5
 U 1 1 590F6C31
 P 5450 3800
 F 0 "R5" V 5530 3800 50  0000 C CNN
@@ -250,7 +217,7 @@ F 3 "" H 5450 3800 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L LED D2
+L natural_ergo_4000-rescue:LED D2
 U 1 1 590F7003
 P 5800 3800
 F 0 "D2" H 5800 3900 50  0000 C CNN
@@ -261,7 +228,7 @@ F 3 "" H 5800 3800 50  0001 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L LED D3
+L natural_ergo_4000-rescue:LED D3
 U 1 1 590F704B
 P 6000 3900
 F 0 "D3" H 6000 4000 50  0000 C CNN
@@ -272,7 +239,7 @@ F 3 "" H 6000 3900 50  0001 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L LED D4
+L natural_ergo_4000-rescue:LED D4
 U 1 1 590F7094
 P 6200 4000
 F 0 "D4" H 6200 4100 50  0000 C CNN
@@ -283,7 +250,7 @@ F 3 "" H 6200 4000 50  0001 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L SW_Push SW1
+L natural_ergo_4000-rescue:SW_Push SW1
 U 1 1 590F8814
 P 1800 3950
 F 0 "SW1" H 1850 4050 50  0000 L CNN
@@ -294,7 +261,7 @@ F 3 "" H 1800 4150 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L SW_Push SW2
+L natural_ergo_4000-rescue:SW_Push SW2
 U 1 1 590F893B
 P 1800 4250
 F 0 "SW2" H 1850 4350 50  0000 L CNN
@@ -305,7 +272,7 @@ F 3 "" H 1800 4450 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L CONN_01X17 J3
+L natural_ergo_4000-rescue:CONN_01X17 J3
 U 1 1 590F9628
 P 7550 1700
 F 0 "J3" H 7550 2600 50  0000 C CNN
@@ -316,7 +283,7 @@ F 3 "" H 7550 1700 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L CONN_01X17 J4
+L natural_ergo_4000-rescue:CONN_01X17 J4
 U 1 1 590F96D3
 P 7600 3700
 F 0 "J4" H 7600 4600 50  0000 C CNN
@@ -365,7 +332,7 @@ C2
 Text Label 7200 2400 0    60   ~ 0
 C3
 $Comp
-L D_Zener D5
+L natural_ergo_4000-rescue:D_Zener D5
 U 1 1 59102EE8
 P 4950 3050
 F 0 "D5" H 4950 3150 50  0000 C CNN
@@ -376,7 +343,7 @@ F 3 "" H 4950 3050 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L D_Zener D6
+L natural_ergo_4000-rescue:D_Zener D6
 U 1 1 59103049
 P 5100 2950
 F 0 "D6" H 5100 3050 50  0000 C CNN
@@ -387,7 +354,7 @@ F 3 "" H 5100 2950 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L R R6
+L natural_ergo_4000-rescue:R R6
 U 1 1 59103099
 P 4750 2800
 F 0 "R6" V 4830 2800 50  0000 C CNN
@@ -398,7 +365,7 @@ F 3 "" H 4750 2800 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L R R7
+L natural_ergo_4000-rescue:R R7
 U 1 1 591032F6
 P 4650 2900
 F 0 "R7" V 4730 2900 50  0000 C CNN
@@ -409,7 +376,7 @@ F 3 "" H 4650 2900 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L R R8
+L natural_ergo_4000-rescue:R R8
 U 1 1 59103D4A
 P 4950 2600
 F 0 "R8" V 5030 2600 50  0000 C CNN
@@ -420,7 +387,7 @@ F 3 "" H 4950 2600 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L VCC #PWR07
+L natural_ergo_4000-rescue:VCC #PWR07
 U 1 1 59103E2B
 P 4950 2400
 F 0 "#PWR07" H 4950 2250 50  0001 C CNN
@@ -447,7 +414,7 @@ T5
 Text Label 4200 2350 0    60   ~ 0
 T6
 $Comp
-L VCC #PWR08
+L natural_ergo_4000-rescue:VCC #PWR08
 U 1 1 591238CA
 P 5250 2600
 F 0 "#PWR08" H 5250 2450 50  0001 C CNN
@@ -474,7 +441,7 @@ Entry Wire Line
 Entry Wire Line
 	4350 2700 4450 2800
 $Comp
-L C C3
+L natural_ergo_4000-rescue:C C3
 U 1 1 591261B1
 P 1600 1600
 F 0 "C3" H 1625 1700 50  0000 L CNN
@@ -485,7 +452,7 @@ F 3 "" H 1600 1600 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L GND #PWR09
+L natural_ergo_4000-rescue:GND #PWR09
 U 1 1 591262B3
 P 1300 1700
 F 0 "#PWR09" H 1300 1450 50  0001 C CNN
@@ -496,7 +463,7 @@ F 3 "" H 1300 1700 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR010
+L natural_ergo_4000-rescue:GND #PWR010
 U 1 1 59126301
 P 1650 2250
 F 0 "#PWR010" H 1650 2000 50  0001 C CNN
@@ -595,7 +562,7 @@ B17
 Text Label 7050 4000 0    60   ~ 0
 B18
 $Comp
-L GND #PWR011
+L natural_ergo_4000-rescue:GND #PWR011
 U 1 1 5913A8A8
 P 5050 3300
 F 0 "#PWR011" H 5050 3050 50  0001 C CNN
@@ -610,24 +577,22 @@ Wire Wire Line
 Wire Wire Line
 	1500 2450 2000 2450
 Wire Wire Line
-	3900 2450 4800 2450
-Wire Wire Line
 	2000 1000 1950 1000
 Wire Wire Line
-	1950 950  1950 1600
+	1950 950  1950 1000
 Wire Wire Line
-	1750 1100 2000 1100
+	1750 1100 1950 1100
 Connection ~ 1950 1000
 Wire Wire Line
 	1950 1300 2000 1300
 Connection ~ 1950 1100
 Wire Wire Line
-	1750 1600 2000 1600
+	1750 1600 1950 1600
 Connection ~ 1950 1300
 Wire Wire Line
 	1950 3300 2000 3300
 Wire Wire Line
-	1950 3100 1950 3350
+	1950 3100 1950 3200
 Wire Wire Line
 	2000 3200 1950 3200
 Connection ~ 1950 3300
@@ -641,9 +606,9 @@ Wire Wire Line
 Wire Wire Line
 	4650 1600 4650 1500
 Wire Wire Line
-	4650 1500 4950 1500
+	4650 1500 4900 1500
 Wire Wire Line
-	4650 1800 4950 1800
+	4650 1800 4900 1800
 Wire Wire Line
 	4650 1700 4650 1800
 Wire Wire Line
@@ -651,7 +616,7 @@ Wire Wire Line
 Connection ~ 4900 1800
 Connection ~ 4900 1500
 Wire Wire Line
-	5250 1500 5250 1800
+	5250 1500 5250 1650
 Wire Wire Line
 	5500 1650 5250 1650
 Connection ~ 5250 1650
@@ -690,7 +655,7 @@ Wire Wire Line
 Wire Wire Line
 	5750 3700 6400 3700
 Wire Wire Line
-	6400 3700 6400 4150
+	6400 3700 6400 3800
 Wire Wire Line
 	6350 4000 6400 4000
 Connection ~ 6400 4000
@@ -735,13 +700,11 @@ Wire Wire Line
 Wire Wire Line
 	7000 2500 7350 2500
 Wire Wire Line
-	7000 2900 7400 2900
+	7000 2900 7300 2900
 Wire Wire Line
-	7000 3000 7400 3000
+	7000 3000 7350 3000
 Wire Wire Line
 	7000 3100 7400 3100
-Wire Bus Line
-	7000 1500 7000 2350
 Wire Wire Line
 	7000 3200 7400 3200
 Wire Wire Line
@@ -768,23 +731,20 @@ Wire Wire Line
 	7000 4400 7400 4400
 Wire Wire Line
 	7000 4500 7400 4500
-Connection ~ 5500 1650
 Wire Wire Line
 	7300 2900 7300 4300
 Wire Wire Line
 	7350 3000 7350 4100
 Wire Wire Line
-	3900 2800 4600 2800
-Wire Wire Line
 	3900 2900 4500 2900
 Wire Wire Line
-	4900 2800 5350 2800
+	4900 2800 5100 2800
 Wire Wire Line
-	4800 2900 5350 2900
+	4800 2900 4950 2900
 Wire Wire Line
 	5100 3250 5100 3100
 Wire Wire Line
-	4950 3250 5100 3250
+	4950 3250 5050 3250
 Wire Wire Line
 	4950 3250 4950 3200
 Wire Wire Line
@@ -815,8 +775,6 @@ Wire Wire Line
 Connection ~ 5100 2800
 Connection ~ 4950 2900
 Wire Bus Line
-	4450 1950 4450 3750
-Wire Bus Line
 	7000 2350 6700 2350
 Connection ~ 1950 1600
 Wire Wire Line
@@ -826,8 +784,6 @@ Wire Wire Line
 Wire Wire Line
 	1600 4250 1450 4250
 Wire Bus Line
-	1350 3750 1350 4350
-Wire Bus Line
 	4450 3750 1350 3750
 Text Label 4000 1200 0    60   ~ 0
 SRCLR
@@ -836,7 +792,7 @@ SRCLK
 Text Label 4000 1100 0    60   ~ 0
 SRD
 $Comp
-L GND #PWR012
+L natural_ergo_4000-rescue:GND #PWR012
 U 1 1 5918411C
 P 6400 4150
 F 0 "#PWR012" H 6400 3900 50  0001 C CNN
@@ -891,7 +847,7 @@ B22
 Text Label 7050 4500 0    60   ~ 0
 B23
 $Comp
-L CONN_01X06 J1
+L natural_ergo_4000-rescue:CONN_01X06 J1
 U 1 1 5918DD4B
 P 1300 2400
 F 0 "J1" H 1300 2750 50  0000 C CNN
@@ -906,7 +862,7 @@ Wire Wire Line
 Text Label 1550 2650 0    60   ~ 0
 BX
 $Comp
-L VCC #PWR013
+L natural_ergo_4000-rescue:VCC #PWR013
 U 1 1 59190561
 P 1650 2150
 F 0 "#PWR013" H 1650 2000 50  0001 C CNN
@@ -922,8 +878,6 @@ Wire Wire Line
 	1650 2250 1500 2250
 Text Label 2100 4100 0    60   ~ 0
 BX
-Wire Bus Line
-	6900 1000 6900 6200
 Entry Wire Line
 	1700 2550 1800 2650
 Wire Bus Line
@@ -932,7 +886,7 @@ NoConn ~ 7200 2200
 NoConn ~ 7200 2300
 NoConn ~ 7200 2400
 $Comp
-L GND #PWR014
+L natural_ergo_4000-rescue:GND #PWR014
 U 1 1 5919D6F5
 P 5650 3300
 F 0 "#PWR014" H 5650 3050 50  0001 C CNN
@@ -944,7 +898,7 @@ F 3 "" H 5650 3300 50  0001 C CNN
 $EndComp
 NoConn ~ 5350 3000
 $Comp
-L USB_OTGP J5
+L natural_ergo_4000-rescue:USB_OTGP J5
 U 1 1 5919FB39
 P 5650 2800
 F 0 "J5" H 5450 3250 50  0000 L CNN
@@ -955,7 +909,7 @@ F 3 "" H 5800 2750 50  0001 C CNN
 	-1   0    0    -1  
 $EndComp
 $Comp
-L C C4
+L natural_ergo_4000-rescue:C C4
 U 1 1 591A4C84
 P 1600 1100
 F 0 "C4" H 1625 1200 50  0000 L CNN
@@ -970,10 +924,10 @@ Wire Wire Line
 Wire Wire Line
 	1450 1600 1300 1600
 Wire Wire Line
-	1300 1100 1300 1700
+	1300 1100 1300 1600
 Connection ~ 1300 1600
 $Comp
-L CP C5
+L natural_ergo_4000-rescue:CP C5
 U 1 1 591AA98A
 P 6100 2850
 F 0 "C5" H 6125 2950 50  0000 L CNN
@@ -984,7 +938,7 @@ F 3 "" H 6100 2850 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L VCC #PWR015
+L natural_ergo_4000-rescue:VCC #PWR015
 U 1 1 591AAC9D
 P 6100 2700
 F 0 "#PWR015" H 6100 2550 50  0001 C CNN
@@ -995,7 +949,7 @@ F 3 "" H 6100 2700 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR016
+L natural_ergo_4000-rescue:GND #PWR016
 U 1 1 591AACEF
 P 6100 3000
 F 0 "#PWR016" H 6100 2750 50  0001 C CNN
@@ -1008,7 +962,7 @@ $EndComp
 Wire Wire Line
 	2050 4250 2000 4250
 Wire Wire Line
-	2050 3950 2050 4250
+	2050 3950 2050 4100
 Wire Wire Line
 	2050 3950 2000 3950
 Wire Wire Line
@@ -1022,7 +976,7 @@ Wire Wire Line
 Wire Wire Line
 	7300 4300 7400 4300
 $Comp
-L 6C595 U2
+L natural_ergo_4000-rescue:6C595 U2
 U 1 1 597D90C3
 P 9200 1550
 F 0 "U2" H 8900 1100 60  0000 C CNN
@@ -1037,7 +991,7 @@ Wire Bus Line
 Wire Bus Line
 	6700 3500 6700 2350
 $Comp
-L 6C595 U4
+L natural_ergo_4000-rescue:6C595 U4
 U 1 1 597DDF06
 P 9350 3350
 F 0 "U4" H 9050 2900 60  0000 C CNN
@@ -1048,7 +1002,7 @@ F 3 "" H 9350 3350 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 6C595 U3
+L natural_ergo_4000-rescue:6C595 U3
 U 1 1 597DDFBF
 P 9250 5050
 F 0 "U3" H 8950 4600 60  0000 C CNN
@@ -1059,7 +1013,7 @@ F 3 "" H 9250 5050 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L VCC #PWR017
+L natural_ergo_4000-rescue:VCC #PWR017
 U 1 1 597E1BB4
 P 9200 700
 F 0 "#PWR017" H 9200 550 50  0001 C CNN
@@ -1070,7 +1024,7 @@ F 3 "" H 9200 700 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR018
+L natural_ergo_4000-rescue:GND #PWR018
 U 1 1 597E26B3
 P 9200 2400
 F 0 "#PWR018" H 9200 2150 50  0001 C CNN
@@ -1093,7 +1047,7 @@ Wire Wire Line
 Wire Wire Line
 	8650 4350 8650 4650
 $Comp
-L VCC #PWR019
+L natural_ergo_4000-rescue:VCC #PWR019
 U 1 1 597E51E7
 P 9350 2500
 F 0 "#PWR019" H 9350 2350 50  0001 C CNN
@@ -1104,7 +1058,7 @@ F 3 "" H 9350 2500 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L VCC #PWR020
+L natural_ergo_4000-rescue:VCC #PWR020
 U 1 1 597E53AC
 P 9250 4200
 F 0 "#PWR020" H 9250 4050 50  0001 C CNN
@@ -1115,7 +1069,7 @@ F 3 "" H 9250 4200 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR021
+L natural_ergo_4000-rescue:GND #PWR021
 U 1 1 597E5461
 P 9350 4200
 F 0 "#PWR021" H 9350 3950 50  0001 C CNN
@@ -1126,7 +1080,7 @@ F 3 "" H 9350 4200 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR022
+L natural_ergo_4000-rescue:GND #PWR022
 U 1 1 597E54D2
 P 9250 5900
 F 0 "#PWR022" H 9250 5650 50  0001 C CNN
@@ -1153,21 +1107,21 @@ Wire Wire Line
 Text Label 8400 1150 0    60   ~ 0
 SRD
 Wire Wire Line
-	8250 1250 8600 1250
+	8250 1250 8550 1250
 Wire Wire Line
 	8600 1350 8550 1350
 Wire Wire Line
-	8550 1250 8550 4750
+	8550 1250 8550 1350
 Connection ~ 8550 1250
 Text Label 8300 1250 0    60   ~ 0
 SRCLK
 Wire Wire Line
-	8250 1450 8600 1450
+	8250 1450 8500 1450
 Text Label 8300 1450 0    60   ~ 0
 SRCLR
 NoConn ~ 9850 5450
 Wire Wire Line
-	8500 1450 8500 4950
+	8500 1450 8500 3250
 Wire Wire Line
 	8500 3250 8750 3250
 Connection ~ 8500 1450
@@ -1177,14 +1131,14 @@ Connection ~ 8500 3250
 Wire Wire Line
 	8750 3350 8450 3350
 Wire Wire Line
-	8450 1550 8450 5850
+	8450 1550 8450 3350
 Wire Wire Line
 	8450 5050 8650 5050
 Wire Wire Line
 	8450 1550 8600 1550
 Connection ~ 8450 3350
 Wire Wire Line
-	8550 3050 8750 3050
+	8550 3050 8700 3050
 Connection ~ 8550 1350
 Wire Wire Line
 	8750 3150 8700 3150
@@ -1192,7 +1146,7 @@ Wire Wire Line
 	8700 3150 8700 3050
 Connection ~ 8700 3050
 Wire Wire Line
-	8550 4750 8650 4750
+	8550 4750 8600 4750
 Connection ~ 8550 3050
 Wire Wire Line
 	8650 4850 8600 4850
@@ -1256,8 +1210,6 @@ Wire Wire Line
 	9950 3550 10200 3550
 Text Label 10000 2850 0    60   ~ 0
 BX
-Wire Bus Line
-	10300 1050 10300 6200
 Wire Wire Line
 	9800 1150 10200 1150
 Wire Wire Line
@@ -1358,4 +1310,76 @@ Text Label 9950 5050 0    60   ~ 0
 B17
 Text Label 9950 4550 0    60   ~ 0
 B12
+Wire Wire Line
+	1950 1000 1950 1100
+Wire Wire Line
+	1950 1100 2000 1100
+Wire Wire Line
+	1950 1100 1950 1300
+Wire Wire Line
+	1950 1300 1950 1600
+Wire Wire Line
+	1950 3300 1950 3350
+Wire Wire Line
+	1950 3200 1950 3300
+Wire Wire Line
+	4900 1800 4950 1800
+Wire Wire Line
+	4900 1500 4950 1500
+Wire Wire Line
+	5250 1650 5250 1800
+Wire Wire Line
+	6400 4000 6400 4150
+Wire Wire Line
+	6400 3900 6400 4000
+Wire Wire Line
+	6400 3800 6400 3900
+Wire Wire Line
+	5050 3250 5100 3250
+Wire Wire Line
+	5100 2800 5350 2800
+Wire Wire Line
+	4950 2900 5350 2900
+Wire Wire Line
+	1950 1600 2000 1600
+Wire Wire Line
+	7300 2900 7400 2900
+Wire Wire Line
+	7350 3000 7400 3000
+Wire Wire Line
+	1300 1600 1300 1700
+Wire Wire Line
+	2050 4100 2050 4250
+Wire Wire Line
+	8550 1250 8600 1250
+Wire Wire Line
+	8500 1450 8600 1450
+Wire Wire Line
+	8500 3250 8500 4950
+Wire Wire Line
+	8450 3350 8450 5050
+Wire Wire Line
+	8550 1350 8550 3050
+Wire Wire Line
+	8700 3050 8750 3050
+Wire Wire Line
+	8550 3050 8550 4750
+Wire Wire Line
+	8600 4750 8650 4750
+Wire Wire Line
+	8450 5050 8450 5850
+Wire Wire Line
+	3900 2450 4800 2450
+Wire Wire Line
+	3900 2800 4600 2800
+Wire Bus Line
+	1350 3750 1350 4350
+Wire Bus Line
+	7000 1500 7000 2350
+Wire Bus Line
+	4450 1950 4450 3750
+Wire Bus Line
+	6900 1000 6900 6200
+Wire Bus Line
+	10300 1050 10300 6200
 $EndSCHEMATC

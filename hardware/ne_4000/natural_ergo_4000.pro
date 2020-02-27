@@ -1,4 +1,4 @@
-update=ceturtdiena, 2020. gada 27. februāris, 11:48:59
+update=ceturtdiena, 2020. gada 27. februāris, 11:53:15
 version=1
 last_client=kicad
 [pcbnew]
